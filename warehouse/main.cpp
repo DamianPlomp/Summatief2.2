@@ -10,7 +10,5 @@ int main(void)
 
     Pallet pallet = Pallet("Kaas", 4, 0);
 
-    pallet.TakeOne();
-    std::cout << pallet.GetItemCount();
-
+    
 };
