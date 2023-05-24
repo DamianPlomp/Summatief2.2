@@ -7,6 +7,7 @@
 class Shelf : public Icontainer
 {
     public:
+        // Array of 4 pallets that are put on a shelf
         std::array<Pallet, 4> pallets;
         // Basic constructor for a shelf
         Shelf();

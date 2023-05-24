@@ -8,6 +8,7 @@ class Warehouse
 {  
     public:
         std::vector<Employee> employees;
+        // Vector with all the shelver contained inside of the warehouse
         std::vector<Shelf> shelves;
         // Basic constructor for a warehouse
         Warehouse();

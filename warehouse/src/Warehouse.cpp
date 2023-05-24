@@ -47,7 +47,12 @@ bool Warehouse::RearrangeShelf(Shelf& shelf)
 
 bool Warehouse::PickItems(std::string itemName, int itemCount)
 {
-    bool itemPicked = false;
+    int amount = 0;
+
+    if (itemCount <= 0)
+    {
+        return false;
+    }
 
     for (auto& shelf : shelves)
     {
@@ -55,25 +60,28 @@ bool Warehouse::PickItems(std::string itemName, int itemCount)
         {
             if (itemName == pallet.GetItemName())
             {
-                while (itemCount > 0 && !pallet.IsEmpty())
-                {
-                    pallet.TakeOne();
-                    itemCount--;
-                    itemPicked = true;
-                }
+                amount+=pallet.GetItemCount();
+            }
+        }
+    };
 
-                if (itemCount == 0)
+    if (amount>=itemCount)
+    {
+        for (auto& shelf : shelves)
+        {
+            for (auto& pallet : shelf.pallets)
+            {
+                if (itemName == pallet.GetItemName())
                 {
-                    break;
+                    while (itemCount > 0 && !pallet.IsEmpty())
+                    {
+                        pallet.TakeOne();
+                        itemCount--;
+                    }
                 }
             }
         }
-        
-        if (itemCount == 0)
-        {
-            break;
-        }
+        return true;
     }
-
-    return itemPicked;
+    return false;
 }

@@ -235,3 +235,87 @@ TEST_CASE("Rearrange shelf with quallified, but busy, employee", "Warehouse::rea
     REQUIRE(warehouse.shelves[0].pallets[2].GetItemCount() == 30);
     REQUIRE(warehouse.shelves[0].pallets[3].GetItemCount() == 10);
 }
+
+TEST_CASE("Test expected case", "Warehouse::PickItems")
+{
+    Warehouse warehouse = Warehouse();
+    Shelf shelf1 = Shelf();
+    shelf1.pallets = {
+        Pallet("Books", 100, 40), 
+        Pallet("Boxes", 100, 10), 
+        Pallet("Books", 100, 20), 
+        Pallet("Books", 100, 20)
+    };
+
+    warehouse.AddShelf(shelf1);
+
+    REQUIRE(warehouse.shelves[0].pallets[0].GetItemCount() == 40);
+    REQUIRE(warehouse.shelves[0].pallets[1].GetItemCount() == 10);
+    REQUIRE(warehouse.shelves[0].pallets[2].GetItemCount() == 20);
+    REQUIRE(warehouse.shelves[0].pallets[3].GetItemCount() == 20);
+
+    bool succesful = warehouse.PickItems("Books", 20);
+
+    REQUIRE(succesful);
+
+    REQUIRE(warehouse.shelves[0].pallets[0].GetItemCount() == 20);
+    REQUIRE(warehouse.shelves[0].pallets[1].GetItemCount() == 10);
+    REQUIRE(warehouse.shelves[0].pallets[2].GetItemCount() == 20);
+    REQUIRE(warehouse.shelves[0].pallets[3].GetItemCount() == 20);
+};
+
+TEST_CASE("Test not enough items for the amount you want to pick", "Warehouse::PickItems")
+{
+    Warehouse warehouse = Warehouse();
+    Shelf shelf1 = Shelf();
+    shelf1.pallets = {
+        Pallet("Books", 100, 40), 
+        Pallet("Boxes", 100, 10), 
+        Pallet("Books", 100, 20), 
+        Pallet("Books", 100, 20)
+    };
+
+    warehouse.AddShelf(shelf1);
+
+    REQUIRE(warehouse.shelves[0].pallets[0].GetItemCount() == 40);
+    REQUIRE(warehouse.shelves[0].pallets[1].GetItemCount() == 10);
+    REQUIRE(warehouse.shelves[0].pallets[2].GetItemCount() == 20);
+    REQUIRE(warehouse.shelves[0].pallets[3].GetItemCount() == 20);
+
+    bool succesful = warehouse.PickItems("Books", 100);
+
+    REQUIRE(!succesful);
+
+    REQUIRE(warehouse.shelves[0].pallets[0].GetItemCount() == 40);
+    REQUIRE(warehouse.shelves[0].pallets[1].GetItemCount() == 10);
+    REQUIRE(warehouse.shelves[0].pallets[2].GetItemCount() == 20);
+    REQUIRE(warehouse.shelves[0].pallets[3].GetItemCount() == 20);
+};
+
+TEST_CASE("Test with a negative item count", "Warehouse::PickItems")
+{
+    Warehouse warehouse = Warehouse();
+    Shelf shelf1 = Shelf();
+    shelf1.pallets = {
+        Pallet("Books", 100, 40), 
+        Pallet("Boxes", 100, 10), 
+        Pallet("Books", 100, 20), 
+        Pallet("Books", 100, 20)
+    };
+
+    warehouse.AddShelf(shelf1);
+
+    REQUIRE(warehouse.shelves[0].pallets[0].GetItemCount() == 40);
+    REQUIRE(warehouse.shelves[0].pallets[1].GetItemCount() == 10);
+    REQUIRE(warehouse.shelves[0].pallets[2].GetItemCount() == 20);
+    REQUIRE(warehouse.shelves[0].pallets[3].GetItemCount() == 20);
+
+    bool succesful = warehouse.PickItems("Books", -20);
+
+    REQUIRE(!succesful);
+
+    REQUIRE(warehouse.shelves[0].pallets[0].GetItemCount() == 40);
+    REQUIRE(warehouse.shelves[0].pallets[1].GetItemCount() == 10);
+    REQUIRE(warehouse.shelves[0].pallets[2].GetItemCount() == 20);
+    REQUIRE(warehouse.shelves[0].pallets[3].GetItemCount() == 20);
+};
