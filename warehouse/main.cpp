@@ -11,4 +11,5 @@ int main(void)
     Pallet pallet = Pallet("Kaas", 4, 0);
 
     
+    
 };

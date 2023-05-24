@@ -3,7 +3,7 @@
 
 Shelf::Shelf()
 {
-
+    pallets = {};
 };
 
 bool Shelf::SwapPallet(int slot, int slot2)

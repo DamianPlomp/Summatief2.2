@@ -1,11 +1,11 @@
 #include <iostream>
 #include "include/Employee.hpp"
 
-Employee::Employee(std::string name, bool busy, bool forkliftCerticate)
+Employee::Employee(std::string name, bool forkliftCerticate)
 {
     this -> name = name;
-    this -> busy = busy;
     this -> forkliftCertificate = forkliftCerticate;
+    this -> busy = false;
 };
 
 std::string Employee::GetName()

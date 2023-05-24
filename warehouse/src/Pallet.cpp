@@ -11,7 +11,9 @@ Pallet::Pallet(std::string itemName, int itemCapacity, int itemCount)
 
 Pallet::Pallet()
 {
-
+    this -> itemCount = 0;
+    this -> itemCapacity = 0;
+    this -> itemName = "";
 };
 
 std::string Pallet::GetItemName()

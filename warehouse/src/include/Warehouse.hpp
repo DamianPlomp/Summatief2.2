@@ -6,10 +6,9 @@
 
 class Warehouse
 {  
-    private:
-        std::vector<Employee> Employees;
-        std::vector<Shelf> Shelves;
     public:
+        std::vector<Employee> employees;
+        std::vector<Shelf> shelves;
         // Basic constructor for a warehouse
         Warehouse();
         // Add an employee to the warehouse

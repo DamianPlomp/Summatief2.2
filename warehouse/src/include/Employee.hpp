@@ -9,7 +9,7 @@ class Employee
         bool forkliftCertificate;
     public:
         // Constructor for the employee class
-        Employee(std::string name, bool busy, bool forkliftCerticate);
+        Employee(std::string name, bool forkliftCerticate);
         // Gets the name of the employee
         std::string GetName();
         // Returns a boolean, true if the employee is busy, false if the person is not

@@ -3,45 +3,53 @@
 
 Warehouse::Warehouse()
 {
-
+    employees = {};
+    shelves = {};
 };
 
 void Warehouse::AddEmployee(Employee employee)
 {
-    Employees.push_back(employee);
+    employees.push_back(employee);
 };
 
 void Warehouse::AddShelf(Shelf shelf)
 {
-    Shelves.push_back(shelf);
+    shelves.push_back(shelf);
 };
 
-bool Warehouse::RearrangeShelf(Shelf& shelf) // TO DO
+bool Warehouse::RearrangeShelf(Shelf& shelf)
 {
-    bool rearranged = false;
+    bool running = false;
 
-    if(Employee::GetForkliftCertificate)
+
+    for(auto& i : employees)
     {
-        for(int i=0; i<3; i++)
+        if(i.GetForkliftCertificate() && !i.GetBusy())
         {
-            for(int j=i+1; j<4; j++)
+            running = true;
+            while(running)
             {
-                if(shelf.pallets[i].GetItemCount() > shelf.pallets[j].GetItemCount())
+                running = false;
+                for(unsigned int i=0; i<shelf.pallets.size()-1; i++)
                 {
-                    shelf.SwapPallet(i, j);
-                    rearranged = true;
+                    if(shelf.pallets[i].GetItemCount() > shelf.pallets[i+1].GetItemCount())
+                    {
+                        shelf.SwapPallet(i, i+1);
+                        running = true;
+                    }
                 }
             }
+            return true;
         }
     }
-    return rearranged;
+    return false;
 };
 
 bool Warehouse::PickItems(std::string itemName, int itemCount)
 {
     bool itemPicked = false;
 
-    for (auto& shelf : Shelves)
+    for (auto& shelf : shelves)
     {
         for (auto& pallet : shelf.pallets)
         {
